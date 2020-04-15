@@ -1,6 +1,9 @@
 {
   "name": "adonis-api-app",
   "version": "4.1.0",
+  "engines": {
+    "yarn": "1.x"
+  },
   "adonis-version": "4.1.0",
   "description": "Adonisjs boilerplate for API server with pre-configured JWT",
   "main": "index.js",
@@ -29,6 +32,10 @@
     "pg": "^8.0.2"
   },
   "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "prettier": "^2.0.4",
     "sqlite3": "^4.1.1"
   },
   "autoload": {
