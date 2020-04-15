@@ -10,7 +10,8 @@
   "scripts": {
     "start": "node server.js",
     "test": "node ace test",
-    "dev": "adonis serve --dev"
+    "dev": "adonis serve --dev",
+    "coverage": "nyc adonis test"
   },
   "keywords": [
     "adonisjs",
@@ -35,8 +36,8 @@
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.1",
-    "prettier": "^2.0.4",
-    "sqlite3": "^4.1.1"
+    "nyc": "^15.0.1",
+    "prettier": "^2.0.4"
   },
   "autoload": {
     "App": "./app"

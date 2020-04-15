@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /** @typedef {import('@adonisjs/framework/src/Request')} request */
 /** @typedef {import('@adonisjs/framework/src/Response')} response */
@@ -8,24 +8,23 @@ const User = use('App/Models/User');
 
 class SessionController {
   async login({ request, auth, response }) {
-    const { email, password } = request.all()
+    const { email, password } = request.all();
 
     try {
       if (await auth.attempt(email, password)) {
-        const { id, username } = await User.findBy('email', email)
-        let user = { id, username, email }
+        const { id, username } = await User.findBy('email', email);
+        let user = { id, username, email };
 
-        const token = await auth.generate(user)
+        const token = await auth.generate(user);
 
-        user = {...user, token}
+        user = { ...user, token };
 
         return response.status(200).json(user);
       }
-    } catch(err) {
-      console.log(err);
-      return response.status(400).json({ message: 'Você não está registrado!' });
+    } catch (err) {
+      return response.status(400).json({ message: 'Erro na autenticação!' });
     }
   }
 }
 
-module.exports = SessionController
+module.exports = SessionController;

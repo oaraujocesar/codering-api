@@ -10,3 +10,7 @@ tmp
 
 # The development sqlite file
 database/*.sqlite
+
+# Coverage code page for test and .nyc_output
+test/coverage
+.nyc_output

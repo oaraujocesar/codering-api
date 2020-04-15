@@ -1,0 +1,16 @@
+{
+  "all": true,
+  "check-coverage": false,
+  "exclude": [
+    "coverage/**",
+    "packages/*/test/**",
+    "test/**",
+    "test{,-*}.{js,cjs,mjs,ts}",
+    "**/*{.,-}test.{js,cjs,mjs,ts}",
+    "**/__tests__/**",
+    "node_modules",
+    "app/Models/Traits"
+  ],
+  "reporter": "html",
+  "report-dir": "test/coverage"
+}
