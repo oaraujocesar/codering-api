@@ -12,32 +12,31 @@ trait('Test/ApiClient');
 trait('Auth/Client');
 
 test('it should create a user', async ({ client }) => {
-  const user = {
-    name: 'Cesinha da Vila1',
-    username: 'cesinha1231',
-    email: 'cesinhadogera1@gmail.com',
-    password: '123456',
+  const { name, username, email, password } = await Factory.model(
+    'App/Models/User'
+  ).make();
+
+  const data = {
+    name,
+    username,
+    email,
+    password,
   };
-  const response = await client.post('/users').send(user).end();
+
+  const response = await client.post('/users').send(data).end();
 
   response.assertStatus(201);
-  response.assertJSON({
-    id: response.body.id,
-    name: 'Cesinha da Vila1',
-    username: 'cesinha1231',
-    email: 'cesinhadogera1@gmail.com',
+  response.assertJSONSubset({
+    name,
+    username,
+    email,
   });
 });
 
 test('it should return an error for user already created', async ({
   client,
 }) => {
-  const user = {
-    name: 'Cesinha da Vila1',
-    username: 'cesinha1231',
-    email: 'cesinhadogera1@gmail.com',
-    password: '123456',
-  };
+  const user = Factory.model('App/Models/User').create();
 
   const response = await client.post('/users').send(user).end();
 
@@ -47,7 +46,7 @@ test('it should return an error for user already created', async ({
   });
 });
 
-test('it should show an user', async ({ assert, client }) => {
+test('it should show an user', async ({ client }) => {
   const user = await Factory.model('App/Models/User').create();
 
   const response = await client
@@ -56,11 +55,11 @@ test('it should show an user', async ({ assert, client }) => {
     .end();
 
   response.assertStatus(200);
-
-  assert.exists(response.body.id);
-  assert.exists(response.body.name);
-  assert.exists(response.body.username);
-  assert.exists(response.body.email);
+  response.assertJSONSubset({
+    name: user.name,
+    username: user.username,
+    email: user.email,
+  });
 });
 
 test('it should return an error for not registered user', async ({
@@ -76,7 +75,7 @@ test('it should return an error for not registered user', async ({
   });
 });
 
-test('it should update an user', async ({ assert, client }) => {
+test('it should update an user', async ({ client }) => {
   const user = await Factory.model('App/Models/User').create();
 
   const data = {
@@ -94,16 +93,16 @@ test('it should update an user', async ({ assert, client }) => {
     .end();
 
   response.assertStatus(200);
-
-  assert.exists(response.body.user.id);
-  assert.exists(response.body.user.name);
-  assert.exists(response.body.user.username);
-  assert.exists(response.body.user.email);
-  assert.exists(response.body.user.bio);
-  assert.exists(response.body.user.facebook);
-  assert.exists(response.body.user.instagram);
-  assert.exists(response.body.user.linkedin);
-  assert.exists(response.body.user.github);
+  response.assertJSONSubset({
+    name: user.name,
+    username: user.username,
+    email: user.email,
+    bio: data.bio,
+    instagram: data.instagram,
+    facebook: data.facebook,
+    github: data.github,
+    linkedin: data.linkedin,
+  });
 });
 
 test('it should return a error for a not registered user when updating', async ({
